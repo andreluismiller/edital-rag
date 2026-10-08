@@ -1,0 +1,30 @@
+[project]
+name = "edital-rag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "André Miller", email = "andreluismiller@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pdfplumber>=0.11.10",
+    "pydantic>=2.14.0",
+    "pymupdf>=1.28.2",
+    "python-dotenv>=1.2.4",
+    "tqdm>=4.70.1",
+]
+
+[project.scripts]
+edital-rag = "edital_rag:main"
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
