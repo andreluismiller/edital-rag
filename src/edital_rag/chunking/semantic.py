@@ -18,14 +18,14 @@ from typing import Any
 
 import fitz
 
-from rag_editais.chunking.strategies import (
+from edital_rag.chunking.strategies import (
     Chunk,
     EstrategiaChunking,
     contar_tokens,
 )
-from rag_editais.parsing.cleaner import limpar_texto, remover_headers_footers
-from rag_editais.parsing.layout import SecaoDetectada, segmentar_por_secoes
-from rag_editais.parsing.pdf_text import extrair_texto_paginas
+from edital_rag.parsing.cleaner import limpar_texto, remover_headers_footers
+from edital_rag.parsing.layout import SecaoDetectada, segmentar_por_secoes
+from edital_rag.parsing.pdf_text import extrair_texto_paginas
 
 
 # ---------------------------------------------------------------------------
@@ -196,7 +196,7 @@ class ChunkingSemantico:
             ultimo = chunks[-1]
             ultimo.texto = ultimo.texto + "\n\n" + "\n\n".join(buffer)
             ultimo.num_tokens = contar_tokens(ultimo.texto)
-            from rag_editais.chunking.strategies import gerar_chunk_id
+            from edital_rag.chunking.strategies import gerar_chunk_id
             ultimo.chunk_id = gerar_chunk_id(ultimo)
         elif buffer:
             # Caso raro: seção muito curta sem chunks anteriores

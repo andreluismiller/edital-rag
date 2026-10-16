@@ -16,13 +16,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from rag_editais.chunking.strategies import (
+from edital_rag.chunking.strategies import (
     Chunk,
     EstrategiaChunking,
     contar_tokens,
     gerar_chunk_id,
 )
-from rag_editais.parsing.pdf_tables import TabelaExtraida, extrair_tabelas_pdf
+from edital_rag.parsing.pdf_tables import TabelaExtraida, extrair_tabelas_pdf
 
 
 @dataclass
