@@ -5,7 +5,7 @@ import argparse
 from pathlib import Path
 from fastembed import TextEmbedding, SparseTextEmbedding
 
-DEFAULT_DENSE = "intfloat/multilingual-e5-small"  # 384d, leve para Codespaces
+DEFAULT_DENSE = "sentence-transformers/all-MiniLM-L6-v2"  # 384d, leve para Codespaces
 DEFAULT_SPARSE = "Qdrant/bm25"
 
 
