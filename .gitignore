@@ -6,7 +6,7 @@ __pycache__/
 
 # Dados e Modelos Pesados
 data/index/
-
+models/
 
 # VS Code / Codespaces
 .vscode/
