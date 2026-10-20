@@ -9,12 +9,15 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "docling>=2.140.0",
+    "fastembed>=0.9.0",
     "numpy>=2.5.4",
+    "onnxruntime>=1.31.0",
     "openai>=3.35.1",
     "pdfplumber>=0.11.10",
     "pydantic>=2.14.0",
     "pymupdf>=1.28.2",
     "python-dotenv>=1.2.4",
+    "tokenizer>=3.7.0",
     "tqdm>=4.70.1",
 ]
 
