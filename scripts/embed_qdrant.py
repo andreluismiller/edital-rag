@@ -13,7 +13,7 @@ from fastembed import SparseTextEmbedding, TextEmbedding
 from qdrant_client import QdrantClient, models
 
 COLLECTION = "edital_aracruz_es"
-DENSE_MODEL = "intfloat/multilingual-e5-small"  # 384d
+DENSE_MODEL = "sentence-transformers/all-MiniLM-L6-v2"  # 384d
 SPARSE_MODEL = "Qdrant/bm25"
 
 PAYLOAD_INDEXES = {
