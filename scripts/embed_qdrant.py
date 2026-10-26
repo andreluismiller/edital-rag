@@ -52,7 +52,9 @@ def embedding_text(chunk: dict) -> str:
 
 
 def point_id(chunk: dict) -> str:
-    return str(uuid.uuid5(uuid.NAMESPACE_URL, chunk["chunk_id"]))
+    # Inclui doc_id para evitar colisão entre documentos com seções homônimas
+    key = f"{chunk['doc_id']}::{chunk['chunk_id']}"
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, key))
 
 
 def ensure_collection(client: QdrantClient, dense_dim: int, recreate: bool) -> None:

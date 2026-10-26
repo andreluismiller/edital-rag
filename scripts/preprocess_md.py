@@ -323,6 +323,31 @@ def report_ensaios(lines: list[str]) -> list[str]:
     return msgs
 
 
+# Novos padrões (junto aos existentes)
+PAGE_MARKER_RE = re.compile(r"^={3,}\s*Page\s+(\d+)\s*={3,}\s*$", re.MULTILINE)
+GARBLED_MARKERS = ("¡¢£¤¥", "ÝÞßàáâãäåæçèéê")  # artefatos de encoding de PDF
+
+# Novas funções
+def convert_page_markers(text: str) -> tuple[str, list[int]]:
+    """'===== Page N =====' -> '<!-- page: N -->' (metadado, não polui o corpo)."""
+    pages = [int(m.group(1)) for m in PAGE_MARKER_RE.finditer(text)]
+    text = PAGE_MARKER_RE.sub(lambda m: f"<!-- page: {m.group(1)} -->", text)
+    return text, pages
+
+def remove_garbled_lines(text: str) -> tuple[str, int]:
+    """Remove linhas dominadas por caracteres Latin-1 estendidos (artefato de extração)."""
+    count = 0
+    result = []
+    for line in text.split("\n"):
+        stripped = line.strip()
+        if len(stripped) >= 20 and any(m in stripped for m in GARBLED_MARKERS):
+            unusual = sum(1 for c in stripped if 0xA0 <= ord(c) <= 0xFF)
+            if unusual / len(stripped) > 0.85:
+                count += 1
+                continue
+        result.append(line)
+    return "\n".join(result), count
+
 # ----------------------- Main -----------------------
 
 def main() -> None:
@@ -357,6 +382,14 @@ def main() -> None:
     # 1. Remover placeholders de imagem
     text, img_positions = remove_image_placeholders(text)
     print(f"[INFO] Placeholders de imagem removidos: {len(img_positions)}")
+
+    # Novos passos (funcionam para ambos os documentos; no-op para Aracruz)
+    text, pages = convert_page_markers(text)
+    if pages:
+        print(f"[INFO] Marcadores de página convertidos: {len(pages)} (páginas {min(pages)}-{max(pages)})")
+    text, garbled = remove_garbled_lines(text)
+    if garbled:
+        print(f"[INFO] Linhas com encoding corrompido removidas: {garbled}")   
 
     # 2. Normalizar headings
     text = normalize_headings(text)
